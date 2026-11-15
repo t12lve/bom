@@ -40,12 +40,23 @@ python scripts/bom.py run --engine lego \
 
 ```bash
 git clone https://github.com/t12lve/bom.git
-cp -r bom/.opencode/skills/bom ~/.claude/skills/
-python ~/.claude/skills/bom/scripts/bom.py selftest
+cd bom
+python install.py --harness all
+python .opencode/skills/bom/scripts/bom.py selftest
 ```
 
-Sous Windows, `scripts/install_claude_link.ps1` crée une jonction, sans droits
-administrateur. Python 3.9+, aucune dépendance, aucune clé API.
+Le skill s'installe dans Claude Code, Codex, Antigravity et OpenCode. Un seul
+format, `SKILL.md`, quatre dossiers :
+
+| Harnais | Portée utilisateur | Portée dépôt | Invocation |
+|---|---|---|---|
+| Claude Code | `~/.claude/skills/bom` | `.claude/skills/bom` | automatique, ou `/bom` |
+| Codex | `~/.agents/skills/bom` | `.agents/skills/bom` | `$bom` ou `/skills` |
+| Antigravity | `~/.gemini/config/skills/bom` | `.agents/skills/bom` | `/bom` |
+| OpenCode | `~/.config/opencode/skills/bom` | `.opencode/skills/bom` | automatique |
+
+Sous Windows, l'installateur crée une jonction (`mklink /J`), sans droits
+administrateur. `--copy` copie au lieu de lier, `--check` vérifie l'existant.
 
 ```bash
 python .opencode/skills/bom/scripts/bom.py run \

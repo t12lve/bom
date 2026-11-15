@@ -1,6 +1,6 @@
 ---
 name: bom
-description: "Use when the user wants to find, generate, audit, score, shortlist or validate an application, product or brand name from a list of keywords (100-500+) or a product brief. Runs a full naming pipeline: semantic clustering, 30 candidates across 5 archetypes, a LEGO-style engine that contracts a translated phrase into a 2-3 syllable name (leg godt -> LEGO), automated domain/registry/store audit, trademark pre-screening, and a 100-point BOM score split between classic SEO and GEO (ChatGPT, Perplexity, Gemini, Claude) plus commercial branding, exported as Markdown, Excel and JSON. Uses consent-gated sub-agents: strong reasoning models for name creation, cheap fast models for SERP/store/trademark research. Also use for bulk domain availability checks (.com/.app/.ai/.io/.fr), GitHub/npm/PyPI collision checks, or comparing two name shortlists. French and English markets."
+description: "Use when the user wants to find, generate, audit, score or shortlist an app, product or brand name from 100-500+ keywords or a brief. Runs semantic clustering, 5 archetypes, a LEGO-style engine that contracts a translated phrase (leg godt -> LEGO), domain/registry/store audit, trademark pre-screen, and a 100-point SEO + GEO score, exported to Markdown, Excel and JSON. Also for bulk domain checks, GitHub/npm/PyPI collisions, or comparing shortlists. FR/EN."
 license: MIT
 ---
 
@@ -48,23 +48,59 @@ carries *Burger au Miel*, the internal nickname — never ship that name).
 5. **Answer in the user's language.** The engine's internals are FR/EN; the
    report voice follows the user.
 
-## Prerequisites
+## Install (any harness)
 
-- Python 3.9+ (stdlib only — no `pip install`).
-- Network access for Phase 2. Without it, use `--offline` and say so.
-- Optional: `websearch` for Phase 3 (SERP, stores, trademark).
+The skill is a folder with a `SKILL.md`. Every harness below reads that open
+format; only the directory changes.
 
-Resolve the skill directory once per session:
+| Harness | User scope | Workspace scope | Invoke |
+|---|---|---|---|
+| Claude Code | `~/.claude/skills/bom` | `.claude/skills/bom` | automatic, or `/bom` |
+| Codex | `~/.agents/skills/bom` (legacy `~/.codex/skills/bom`) | `.agents/skills/bom` | `$bom` or `/skills` |
+| Antigravity | `~/.gemini/config/skills/bom` | `.agents/skills/bom` | `/bom` |
+| OpenCode | `~/.config/opencode/skills/bom` | `.opencode/skills/bom` | automatic |
 
 ```bash
-# Linux / macOS
-BOM=~/.claude/skills/bom
-# Windows
-BOM="$HOME/.claude/skills/bom"
+# from the skill folder (or: python install.py --harness all at the repo root)
+python scripts/install_skill.py --harness all              # user scope
+python scripts/install_skill.py --harness codex --project  # repo scope
+python scripts/install_skill.py --check                    # verify what is installed
+```
+
+`--copy` forces a copy instead of a link, `--force` replaces, `--home` installs
+into a sandbox. On Windows the installer creates a junction: no administrator
+rights, and editing the repository updates every harness at once.
+
+Then resolve the skill directory once per session, using the path from the
+table (or the repository path when running in place):
+
+```bash
+BOM="$HOME/.claude/skills/bom"   # Claude; replace with your harness path
+# BOM="$(pwd)/.opencode/skills/bom"   # running from the repository
 ```
 
 All commands below are relative to `$BOM`. `scripts/bom.py` is the only entry
 point; `--help` on any subcommand is authoritative.
+
+### Harness differences
+
+- **Sub-agents.** Claude exposes a task/sub-agent tool, OpenCode a `subagent`
+  tool, Antigravity custom agents; Codex runs one model. If the harness has no
+  sub-agent tool, run the phases sequentially — the scripts and packet schemas
+  are identical. Ask for consent before spawning, in every harness.
+- **Search.** Use the harness's own web search or browser. Never hardcode a
+  provider or a tool name.
+- **Models.** Resolve `creation` to the strongest reasoning model available and
+  `research` to the cheapest fast one; never hardcode an id.
+- **Shell.** The examples are POSIX. On PowerShell `python` works, `cp` does
+  not: prefer the Python scripts over shell copy commands.
+- **Paths.** Never assume `~/.claude`; read the harness row above.
+
+## Requirements
+
+- Python 3.9+ (stdlib only, no `pip install`).
+- Network access for Phase 2. Without it, use `--offline` and say so.
+- Phase 3 needs the harness search tool, or a human doing the checks.
 
 ## Pipeline
 
@@ -291,7 +327,7 @@ python scripts/bom.py merge --inputs runs/acme/packets/results/*.json \
 
 For each of the 10 finalists:
 
-1. **SERP** — run the 5 queries with `websearch` (or the browser). Record:
+1. **SERP** - run the 5 queries with the harness web search (or a browser). Record:
    - number of organic results on page 1,
    - any dominant entity (film, celebrity, big brand) → disqualifying,
    - dictionary-only results → the exact query is not ownable,
@@ -434,7 +470,7 @@ python scripts/bom.py check --names "rankly,hivelens" --tlds com,fr,ai
 - `references/report-template.md` — deliverable structure and acceptance.
 - `references/lego-mechanic.md` — contraction rules, languages, fidelity, limits.
 - `agents/` — sub-agent prompts (creation + research) with output schemas.
-- `INSTALL.md` — symlink/copy into `~/.claude/skills/bom`.
+- `INSTALL.md` - install matrix for Claude Code, Codex, Antigravity, OpenCode.
 
 Advanced documentation (read on demand, not at every run):
 

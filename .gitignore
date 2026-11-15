@@ -20,6 +20,7 @@ desktop.ini
 # Hallmark (design session artefacts)
 .hallmark/
 .playwright-mcp/
+.agents/
 
 # Release assets
 *.zip

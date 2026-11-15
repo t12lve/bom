@@ -5,4 +5,4 @@ multi-archetype candidate generation, technical audit, 100-point scoring
 (SEO + GEO) and an executive report.
 """
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"

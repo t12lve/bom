@@ -10,6 +10,8 @@ No network is used.
 from __future__ import annotations
 
 import json
+import re
+import subprocess
 import sys
 import tempfile
 import zipfile
@@ -273,6 +275,45 @@ def main() -> int:
             virgin
             and virgin[0]["pillars"]["seo"]["parts"]["virginity"].get("measured") is True,
             "SERP vierge mesuree remplace l'estimation",
+        )
+
+        print("[selftest] compatibilite harnais")
+        skill_text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        match = re.match(r"^---\n(.*?)\n---\n", skill_text, re.S)
+        fields: dict[str, str] = {}
+        if match:
+            for line in match.group(1).splitlines():
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    fields[key.strip()] = value.strip().strip('"')
+        check.ok(fields.get("name") == "bom", "frontmatter: name=bom")
+        description = fields.get("description", "")
+        check.ok(
+            0 < len(description) <= 500,
+            "description <= 500 caracteres (limite Codex)",
+            str(len(description)),
+        )
+
+        installer = ROOT / "scripts" / "install_skill.py"
+        check.ok(installer.exists(), "installateur multi-harnais present")
+        sandbox = work / "sandbox-home"
+        proc = subprocess.run(
+            [sys.executable, str(installer), "--home", str(sandbox), "--copy", "--harness", "all"],
+            capture_output=True,
+            text=True,
+        )
+        check.ok(proc.returncode == 0, "installation dans un HOME de test", proc.stderr[-160:])
+        expected = [
+            ".claude/skills/bom",
+            ".agents/skills/bom",
+            ".gemini/config/skills/bom",
+            ".config/opencode/skills/bom",
+        ]
+        missing = [path for path in expected if not (sandbox / path / "SKILL.md").exists()]
+        check.ok(not missing, "4 chemins harnais ecrits", ",".join(missing))
+        check.ok(
+            all((sandbox / path / "scripts" / "bom.py").exists() for path in expected),
+            "bom.py present dans chaque installation",
         )
 
     return check.report()

@@ -43,7 +43,7 @@
           <a class="btn btn-primary" href="#ticket">Installer le skill</a>
           <a class="btn btn-ghost" href="#menu">Lire le menu</a>
         </div>
-        <p class="hero-note">OpenCode et Claude Code. Python 3.9+. Aucune dépendance.</p>
+        <p class="hero-note">Claude Code, Codex, Antigravity, OpenCode. Python 3.9+.</p>
       </div>
 
       <div class="hero-art">
@@ -189,9 +189,9 @@
 
       <div class="ticket" role="group" aria-label="Commandes d’installation">
         <p class="ticket-line"><span class="prompt">$</span> git clone https://github.com/t12lve/bom.git</p>
-        <p class="ticket-line"><span class="prompt">$</span> cp -r bom/.opencode/skills/bom ~/.claude/skills/</p>
-        <p class="ticket-line"><span class="prompt">$</span> python ~/.claude/skills/bom/scripts/bom.py selftest</p>
-        <p class="ticket-ok">PASS: 54 verifications</p>
+        <p class="ticket-line"><span class="prompt">$</span> cd bom &amp;&amp; python install.py --harness all</p>
+        <p class="ticket-line"><span class="prompt">$</span> python .opencode/skills/bom/scripts/bom.py selftest</p>
+        <p class="ticket-ok">PASS: 60 verifications</p>
         <div class="ticket-total">
           <span>Total</span>
           <span>0 dépendance</span>

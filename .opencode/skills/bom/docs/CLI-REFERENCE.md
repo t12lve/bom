@@ -174,7 +174,7 @@ prochaines étapes).
 bom selftest
 ```
 
-54 assertions hors ligne : pipeline complet, invariants de score, exports,
+60 assertions hors ligne : pipeline complet, invariants de score, exports,
 mécanique LEGO (`leg godt → lego`, puis rejet de `lego`), paquets et fusion.
 Code de sortie 0 si tout passe, 1 sinon. À lancer avant toute livraison et en CI.
 

@@ -155,7 +155,7 @@ jobs:
       - run: python .opencode/skills/bom/scripts/bom.py selftest
 ```
 
-Le code de sortie est 0 si les 54 assertions passent, 1 sinon. Aucun réseau
+Le code de sortie est 0 si les 60 assertions passent, 1 sinon. Aucun réseau
 n'est requis : la CI ne dépend d'aucun service externe.
 
 ## 11. Deux noms, une décision

@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.1.2 — 2026-11-15
+
+### Compatibilité multi-harnais
+
+Le skill était écrit au format ouvert `SKILL.md` mais documenté et installé
+comme un skill Claude/OpenCode. Il est désormais explicitement pris en charge
+par **Claude Code, Codex, Antigravity et OpenCode**.
+
+- **`scripts/install_skill.py`** : installe le skill dans les quatre harnais,
+  avec les bons chemins, en lien (jonction Windows) ou en copie. Options
+  `--harness`, `--project`, `--copy`, `--check`, `--dry-run`, `--home`.
+  Vérifie chaque installation en exécutant `bom.py --version` à travers elle.
+- **Chemins officiels** : `~/.claude/skills/bom`, `~/.agents/skills/bom`
+  (Codex, et `.agents/skills` partagé avec Antigravity), `~/.gemini/config/skills/bom`
+  (Antigravity), `~/.config/opencode/skills/bom`.
+- **Frontmatter compatible Codex** : description ramenée à moins de 500
+  caractères, sur une ligne, sans perdre les déclencheurs.
+- **`AGENTS.md`** à la racine : instructions lues automatiquement par Codex et
+  Antigravity (emplacement du skill, tests, invariants).
+- **`SKILL.md`** : section « Install (any harness) », tableau des chemins et des
+  invocations, section « Harness differences » (sous-agents, recherche, modèles,
+  shell, chemins). Plus aucune hypothèse `~/.claude` ni `websearch`.
+- **`INSTALL.md`** réécrit pour les quatre harnais, avec le dépannage propre à
+  chacun.
+- Page et README : la liste des harnais et la commande d'installation sont à jour.
+
+### Vérification
+
+- 6 assertions `selftest` supplémentaires (60 au total) : frontmatter, limite
+  Codex, présence de l'installateur, installation dans un HOME de test et
+  présence de `bom.py` dans les quatre chemins.
+- Installation réelle vérifiée sur la machine : Claude (jonction existante),
+  Codex (`~/.agents/skills/bom`), Antigravity
+  (`~/.gemini/config/skills/bom`), OpenCode
+  (`~/.config/opencode/skills/bom`), toutes en `bom 1.1.2`.
+
 ## 1.1.1 — 2026-11-15
 
 Optimisation et durcissement, sans changement de schéma.

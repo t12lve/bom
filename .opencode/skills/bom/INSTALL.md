@@ -1,91 +1,120 @@
-# Install BOM as a Claude/OpenCode skill
+# Install BOM in Claude Code, Codex, Antigravity or OpenCode
 
-BOM is a folder. Installation is linking or copying that folder into the skills
-directory your agent reads, then checking that the entry point runs.
+BOM is a standard agent skill: a folder containing a `SKILL.md` with YAML
+frontmatter, plus scripts and references. Every harness below reads that same
+format; only the directory it scans changes.
 
-## Where the skill lives now
+## One command
 
-```
-<repo>/.opencode/skills/bom/
-  README.md            entry point + 60-second tour
-  SKILL.md             the agent's operating manual
-  references/          seven domain documents
-  docs/                architecture, CLI, data model, cookbook, extending
-  scripts/bom.py       CLI entry point
-  scripts/bomlib/      engine (stdlib only)
-  scripts/selftest.py  54 assertions, offline
-  agents/              sub-agent prompts (creation + research)
-  assets/              example corpus, brief, report
-```
-
-## Target directories
-
-| Harness | Directory |
-|---|---|
-| Claude Code | `~/.claude/skills/bom` |
-| OpenCode (project) | `<repo>/.opencode/skills/bom` |
-| OpenCode (global) | `~/.config/opencode/skills/bom` |
-
-The folder is already in an OpenCode project path. For Claude, add a link.
-
-## Windows — junction (no admin rights needed)
-
-```powershell
-pwsh -File .opencode\skills\bom\scripts\install_claude_link.ps1
-```
-
-Default: source = this skill folder, target = `$HOME\.claude\skills\bom`.
-Add `-Force` to replace an existing link, `-Copy` to copy instead of linking.
-
-A junction (`New-Item -ItemType Junction`) works without elevated rights and is
-followed by every tool that reads the folder. A symbolic link needs Developer
-Mode or admin, which is why the script defaults to a junction.
-
-## macOS / Linux — symlink
+From a fresh clone, at the repository root:
 
 ```bash
-bash .opencode/skills/bom/scripts/install_claude_link.sh
+python install.py --harness all
 ```
 
-Default: source = this skill folder, target = `~/.claude/skills/bom`.
-Add `--copy` to copy, `--force` to replace.
+or, from inside the skill folder:
+
+```bash
+python scripts/install_skill.py --harness all
+```
+
+It links the skill (junction on Windows, symlink elsewhere) into every
+user-scope directory that exists for the four harnesses, then runs
+`bom.py --version` through each install to prove it works.
+
+| Option | Effect |
+|---|---|
+| `--harness claude\|codex\|antigravity\|opencode\|all` | choose the target (default `all`) |
+| `--project` | install into the current repository instead of the user scope |
+| `--copy` | copy the folder instead of linking it |
+| `--force` | replace an existing install |
+| `--home <dir>` | sandbox root (tests) |
+| `--check` | verify what is installed, no writes |
+| `--dry-run` | show the plan |
+
+## Where each harness reads
+
+| Harness | User scope | Workspace scope | Invoke |
+|---|---|---|---|
+| Claude Code | `~/.claude/skills/bom` | `.claude/skills/bom` | automatic, or `/bom` |
+| Codex | `~/.agents/skills/bom` (legacy `~/.codex/skills/bom`, also read) | `.agents/skills/bom` | `$bom` or `/skills` |
+| Antigravity | `~/.gemini/config/skills/bom` (App and CLI) | `.agents/skills/bom` | `/bom` |
+| OpenCode | `~/.config/opencode/skills/bom` | `.opencode/skills/bom` | automatic |
+
+Notes from the harness documentation:
+
+- **Codex** scans `.agents/skills` in the working directory and every parent up
+  to the repository root, plus `$HOME/.agents/skills`. It still reads the older
+  `$CODEX_HOME/skills` (`~/.codex/skills`). A folder symlink is followed.
+  Older builds keep skills behind a flag: `[features] skills = true` in
+  `~/.codex/config.toml`, or `codex --enable skills`.
+- **Antigravity** defaults to `.agents/skills` and still reads `.agent/skills`.
+  The App reads `~/.gemini/config/skills`; the CLI also reads
+  `~/.gemini/antigravity-cli/skills` and `~/.gemini/skills`. Every skill also
+  becomes a `/bom` command.
+- **Claude Code** reads `~/.claude/skills` and `.claude/skills`. A skill is
+  selected by its description, and can be called by name.
+- **OpenCode** reads the project `.opencode/skills` and the global
+  `~/.config/opencode/skills`.
 
 ## Verify
 
 ```bash
 python .opencode/skills/bom/scripts/bom.py --version
 python .opencode/skills/bom/scripts/bom.py selftest
+python scripts/install_skill.py --check
 ```
 
-`selftest` runs the whole pipeline offline on the bundled example and checks the
-invariants (5 clusters, 30 candidates, 4 pillars summing to 100, report
-generated). It must print `PASS`.
+`selftest` runs the whole pipeline offline and asserts the invariants (clusters,
+generation, audit, score, exports, LEGO reference case, sub-agent packets). It
+must print `PASS`.
 
-Then, in a new agent session, ask something like *"trouve-moi un nom pour une app
-de gestion de food cost"* — the `bom` skill should be selected. If it is not,
-check that `SKILL.md` sits at the root of the linked folder (not nested one level
-deeper).
+Then start a new session in the harness and ask for a name: the skill should be
+selected from its description. If it is not:
 
-## Updating
+| Symptom | Fix |
+|---|---|
+| Codex does not list it | check `~/.agents/skills/bom/SKILL.md` exists; enable `[features] skills = true` on older builds; restart |
+| Antigravity does not list it | the folder must sit directly in `skills/`, not one level deeper; restart the workspace |
+| Claude does not list it | `SKILL.md` must be at the folder root, not nested |
+| Duplicate entry in Codex | a copy exists in both `~/.agents/skills` and `~/.codex/skills`; remove one |
 
-Because the install is a link, editing the repo is enough. If you installed with
-`--copy`, re-run the script with `--force`.
+## Link or copy
 
-## Uninstalling
+The default link keeps the repository as the single source of truth: editing
+`SKILL.md` updates every harness. `--copy` is for environments where links are
+blocked or where the repository will be deleted. Re-run with `--force` after an
+update if you copied.
+
+On Windows, the installer uses a directory junction (`mklink /J`): no
+administrator rights, and removing it never deletes the source.
+
+## Uninstall
 
 ```powershell
-Remove-Item "$HOME\.claude\skills\bom"          # junction: removes the link only
+Remove-Item "$HOME\.agents\skills\bom"        # Codex / Antigravity workspace
+Remove-Item "$HOME\.claude\skills\bom"        # Claude
+Remove-Item "$HOME\.gemini\config\skills\bom" # Antigravity
+Remove-Item "$HOME\.config\opencode\skills\bom" # OpenCode
 ```
 
 ```bash
-rm ~/.claude/skills/bom                          # symlink: removes the link only
+rm ~/.agents/skills/bom ~/.claude/skills/bom \
+   ~/.gemini/config/skills/bom ~/.config/opencode/skills/bom
 ```
 
-Deleting a junction or symlink does not delete the source folder.
+Removing a junction or a symlink does not delete the repository.
+
+## Legacy scripts
+
+`scripts/install_claude_link.ps1` and `install_claude_link.sh` remain for a
+Claude-only install from an older checkout. They are equivalent to
+`install_skill.py --harness claude`; prefer the Python installer, which covers
+all four harnesses.
 
 ## Requirements
 
 - Python 3.9+ (3.12 tested), standard library only.
-- No API keys. Network is optional; without it, use `--offline`.
-- Windows, macOS and Linux are supported; paths in the scripts are resolved
-  relative to the script location, so the repo can live anywhere.
+- No API key. Network is optional; without it, use `--offline`.
+- Windows, macOS and Linux. The installer resolves paths relative to the script,
+  so the repository can live anywhere.

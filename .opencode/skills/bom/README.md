@@ -61,7 +61,7 @@ départage — elle ne dilue pas le score.
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | tous | versions, limites connues, feuille de route |
 | [references/](references/) | l'agent | le fond métier : scoring, GEO, archétypes, légal, LEGO |
 | [agents/](agents/) | l'orchestrateur | prompts des sous-agents + porte de consentement |
-| [INSTALL.md](INSTALL.md) | ops | jonction/symlink vers `~/.claude/skills/bom` |
+| [INSTALL.md](INSTALL.md) | ops | installation Claude Code, Codex, Antigravity, OpenCode |
 
 ## Principes de conception
 
@@ -78,6 +78,6 @@ départage — elle ne dilue pas le score.
 
 ## État
 
-Version 1.1.1 — 54 assertions `selftest`, audit réseau réel (RDAP, DNS, GitHub,
+Version 1.1.2 — 60 assertions `selftest`, audit réseau réel (RDAP, DNS, GitHub,
 npm, PyPI, crates.io, iTunes), exports Markdown/Excel/JSON/CSV. Voir
 [docs/CHANGELOG.md](docs/CHANGELOG.md) pour les limites assumées.
