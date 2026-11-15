@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.bom-cache/
+runs/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Hallmark (design session artefacts)
+.hallmark/
+.playwright-mcp/
+
+# Release assets
+*.zip
