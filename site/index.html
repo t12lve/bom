@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burger au Miel : BOM, le naming qui se déguste</title>
+<meta name="description" content="BOM transforme une liste de mots-clés en noms d’applications vérifiés, notés sur 100 en SEO et en GEO. Un skill Python, zéro dépendance, avec un menu secret.">
+<meta name="theme-color" content="#f7efdf">
+<meta property="og:title" content="Burger au Miel : BOM">
+<meta property="og:description" content="Vos mots-clés deviennent des noms vérifiés, notés en SEO et en GEO. Et il y a un menu secret.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      Burger au Miel
+      <span>BOM</span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#menu">Le menu</a>
+      <a href="#recette">La recette</a>
+      <a href="#addition">L’addition</a>
+      <a href="#ticket">Le ticket</a>
+    </nav>
+    <a class="nav-cta" href="https://github.com/t12lve/bom">GitHub</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>Un nom<br>
+        qui se <span class="mark">déguste</span>.</h1>
+        <p class="lead">Vos mots-clés deviennent des noms vérifiés, notés en SEO et en GEO.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#ticket">Installer le skill</a>
+          <a class="btn btn-ghost" href="#menu">Lire le menu</a>
+        </div>
+        <p class="hero-note">OpenCode et Claude Code. Python 3.9+. Aucune dépendance.</p>
+      </div>
+
+      <div class="hero-art">
+        <button class="burger" id="burger" type="button" aria-label="Menu secret : jouer le son">
+          <svg viewBox="0 0 420 360" role="img" aria-hidden="true" focusable="false">
+            <ellipse class="shadow" cx="210" cy="324" rx="170" ry="22"/>
+            <ellipse class="plate" cx="210" cy="310" rx="178" ry="30"/>
+            <path class="bun-bottom" d="M94 288 Q210 320 326 288 L326 264 Q210 296 94 264 Z"/>
+            <rect class="patty" x="86" y="240" width="248" height="28" rx="14"/>
+            <g class="cheese">
+              <rect x="82" y="228" width="256" height="18" rx="6"/>
+              <circle cx="126" cy="248" r="9"/>
+              <circle cx="210" cy="252" r="7"/>
+              <circle cx="290" cy="248" r="8"/>
+            </g>
+            <path class="lettuce" d="M72 230 Q84 246 96 230 Q108 246 120 230 Q132 246 144 230 Q156 246 168 230 Q180 246 192 230 Q204 246 216 230 Q228 246 240 230 Q252 246 264 230 Q276 246 288 230 Q300 246 312 230 Q324 246 336 230 Q348 246 356 230 L356 218 Q210 250 72 218 Z"/>
+            <path class="bun-top" d="M76 222 Q76 102 210 102 Q344 102 344 222 Q210 246 76 222 Z"/>
+            <path class="bun-shine" d="M110 196 Q118 136 180 122 Q146 150 142 198 Z"/>
+            <g class="seeds">
+              <ellipse cx="150" cy="160" rx="7" ry="3.4" transform="rotate(-18 150 160)"/>
+              <ellipse cx="196" cy="142" rx="7" ry="3.4" transform="rotate(8 196 142)"/>
+              <ellipse cx="246" cy="146" rx="7" ry="3.4" transform="rotate(-12 246 146)"/>
+              <ellipse cx="292" cy="168" rx="7" ry="3.4" transform="rotate(20 292 168)"/>
+              <ellipse cx="170" cy="190" rx="7" ry="3.4" transform="rotate(14 170 190)"/>
+              <ellipse cx="268" cy="192" rx="7" ry="3.4" transform="rotate(-6 268 192)"/>
+            </g>
+            <g class="honey">
+              <path class="honey-pour" d="M284 148 Q291 186 287 214 Q285 232 292 242 Q299 232 297 214 Q293 186 300 148 Z"/>
+              <circle class="honey-drop" cx="292" cy="252" r="7"/>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts" aria-label="En bref">
+    <div class="wrap facts-grid">
+      <p><strong>147</strong> mots-clés dans l’exemple</p>
+      <p><strong>5</strong> familles de noms</p>
+      <p><strong>100</strong> points, moitié SEO moitié IA</p>
+    </div>
+  </section>
+
+  <section class="section" id="menu">
+    <div class="wrap">
+      <h2>Le menu</h2>
+      <p class="lede">Trois plats, un seul produit.</p>
+
+      <ol class="menu-list">
+        <li class="menu-item">
+          <div class="menu-line">
+            <h3>Le Classique</h3>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="menu-price">30 noms</span>
+          </div>
+          <p class="menu-desc">Cinq familles, du descriptif hybride au néologisme de sept lettres. Le point de départ quand rien n’est encore décidé.</p>
+        </li>
+        <li class="menu-item">
+          <div class="menu-line">
+            <h3>Le Miel</h3>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="menu-price">leg godt → LEGO</span>
+          </div>
+          <p class="menu-desc">Une expression traduite en dix langues, contractée en deux ou trois syllabes. La mécanique LEGO, avec la provenance affichée.</p>
+        </li>
+        <li class="menu-item">
+          <div class="menu-line">
+            <h3>L’Addition</h3>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="menu-price">100 points</span>
+          </div>
+          <p class="menu-desc">Quatre piliers, vingt-cinq points chacun. Le SEO classique d’un côté, les moteurs IA de l’autre, et le commercial au milieu.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="recette">
+    <div class="wrap">
+      <h2>La recette</h2>
+      <p class="lede">Quatre gestes, dans cet ordre.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-num">01</span>
+          <h3>Ingérer</h3>
+          <p>Cent à cinq cents mots-clés, un brief, un marché. Le corpus est le vrai brief.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">02</span>
+          <h3>Générer</h3>
+          <p>Cinq archétypes, ou une contraction multilingue si la promesse tient en une expression.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">03</span>
+          <h3>Vérifier</h3>
+          <p>Domaines, registres, stores, antériorité. Une inconnue reste une inconnue.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">04</span>
+          <h3>Noter</h3>
+          <p>Cent points, puis un rapport qui dit quoi acheter et ce qui reste à vérifier.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="addition">
+    <div class="wrap">
+      <h2>L’addition</h2>
+      <p class="lede">Chaque pilier pèse vingt-cinq points. La fidélité départage les ex æquo.</p>
+
+      <div class="weights">
+        <div class="weight weight-tech">
+          <p class="weight-value">25</p>
+          <h3>Technique</h3>
+          <p>Domaines, registres, handles, fautes de frappe.</p>
+        </div>
+        <div class="weight weight-seo">
+          <p class="weight-value">25</p>
+          <h3>SEO</h3>
+          <p>Virginité SERP, intention, longue traîne.</p>
+        </div>
+        <div class="weight weight-geo">
+          <p class="weight-value">25</p>
+          <h3>GEO</h3>
+          <p>Entités, ancrage, hallucination, stabilité.</p>
+        </div>
+        <div class="weight weight-com">
+          <p class="weight-value">25</p>
+          <h3>Commerce</h3>
+          <p>Téléphone, mémoire, prononciation, fit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ticket">
+    <div class="wrap">
+      <h2>Le ticket</h2>
+      <p class="lede">Trois lignes, et le skill est à vous.</p>
+
+      <div class="ticket" role="group" aria-label="Commandes d’installation">
+        <p class="ticket-line"><span class="prompt">$</span> git clone https://github.com/t12lve/bom.git</p>
+        <p class="ticket-line"><span class="prompt">$</span> cp -r bom/.opencode/skills/bom ~/.claude/skills/</p>
+        <p class="ticket-line"><span class="prompt">$</span> python ~/.claude/skills/bom/scripts/bom.py selftest</p>
+        <p class="ticket-ok">PASS: 54 verifications</p>
+        <div class="ticket-total">
+          <span>Total</span>
+          <span>0 dépendance</span>
+        </div>
+      </div>
+
+      <p class="ticket-note">Windows : le script d’installation crée une jonction, sans droits administrateur.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-brand">Burger au Miel</p>
+      <p class="footer-line">BOM, le naming qui se déguste.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/t12lve/bom">Le dépôt</a>
+      <a href="https://github.com/t12lve/bom/blob/main/.opencode/skills/bom/SKILL.md">Le mode d’emploi</a>
+      <a href="https://github.com/t12lve/bom/blob/main/LICENSE">Licence MIT</a>
+    </div>
+    <div class="footer-side">
+      <p>Son : <em>burger au miel</em>, 2020.</p>
+      <p>
+        <button class="secret-hint" id="secret-hint" type="button">Menu secret dans le burger.</button>
+      </p>
+      <p class="secret-line" id="secret-line" hidden>BOM = Burger au Miel. Ne le dites pas au client.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" data-open="false">
+  Menu secret débloqué. Bon appétit.
+</div>
+
+<audio id="secret-sound" src="assets/burger-au-miel.mp3" preload="none"></audio>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
