@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add("js")</script>
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/styles.css?v=3">
 </head>
 <body>
 
@@ -76,6 +76,14 @@
             </g>
           </svg>
         </button>
+
+        <div class="sound-row">
+          <button class="sound-btn" id="sound-btn" type="button" aria-pressed="false">
+            <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span id="sound-label">Écouter le menu secret</span>
+          </button>
+          <a class="sound-fallback" id="sound-fallback" href="assets/burger-au-miel.mp3" hidden>Ouvrir le son dans le navigateur</a>
+        </div>
       </div>
     </div>
   </section>
@@ -229,8 +237,10 @@
   Menu secret débloqué. Bon appétit.
 </div>
 
-<audio id="secret-sound" src="assets/burger-au-miel.mp3" preload="none"></audio>
+<audio id="secret-sound" preload="metadata" playsinline webkit-playsinline>
+  <source src="assets/burger-au-miel.mp3" type="audio/mpeg">
+</audio>
 
-<script src="assets/app.js" defer></script>
+<script src="assets/app.js?v=4" defer></script>
 </body>
 </html>

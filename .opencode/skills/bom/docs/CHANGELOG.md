@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.1.3 — 2026-11-15
+
+### Corrigé — le son ne se lançait pas sur GitHub Pages
+
+Le fichier est un MP3 standard (MPEG-1 Layer III, 44,1 kHz, 192 kb/s) et il
+jouait dans Chromium. Le problème venait du déclenchement et du type MIME, pas
+du fichier.
+
+- **Type explicite** : `<source type="audio/mpeg">` au lieu d'un `src` nu.
+  GitHub Pages sert le fichier en `audio/mp3`, que certains navigateurs
+  (Safari en tête) refusent de négocier.
+- **Chargement au geste** : `preload="metadata"`, `playsinline`,
+  `webkit-playsinline`, et `audio.load()` avant `play()` pour les navigateurs
+  qui refusent un premier `play()` sur un élément vide.
+- **Bouton visible** : « Écouter le menu secret » sous le burger, avec un état
+  « Le son joue » et trois barres animées. Le burger et le mot `miel` restent
+  des déclencheurs.
+- **Autoplay puis premier clic** : le son est tenté au chargement ; si le
+  navigateur le refuse (cas normal pour l'audio non muet), le tout premier clic
+  ou la première touche, n'importe où sur la page, lance la lecture. Les
+  déclencheurs explicites restent prioritaires pour éviter un double départ.
+- **Lien de secours** : si la lecture est bloquée, un lien « Ouvrir le son dans
+  le navigateur » apparaît, avec un message explicite. Le son reste accessible
+  même sans JavaScript (`<noscript>` à venir côté lecteur natif).
+- **Cache** : `styles.css?v=3` et `app.js?v=3` pour forcer le rechargement après
+  déploiement.
+
+Vérifié localement : lecture (2,0 s, `readyState 4`, zéro erreur console),
+état `aria-pressed`, repli sur source absente, et rendu mobile 390 px sans
+débordement.
+
 ## 1.1.2 — 2026-11-15
 
 ### Compatibilité multi-harnais

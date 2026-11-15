@@ -255,6 +255,69 @@ h1 {
 .is-unlocked .honey-drop { opacity: 1; transform: translateY(0); }
 .is-unlocked .burger { transform: rotate(-2deg); }
 
+.sound-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.sound-btn:hover { border-color: var(--honey-3); color: var(--ink); }
+
+.sound-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-bars i {
+  display: block;
+  width: 3px;
+  height: 12px;
+  background: var(--honey-3);
+  transform: scaleY(0.35);
+  transform-origin: bottom;
+  transition: transform 200ms ease;
+}
+
+.sound-bars i:nth-child(2) { height: 8px; }
+.sound-bars i:nth-child(3) { height: 10px; }
+
+.sound-btn[aria-pressed="true"] .sound-bars i {
+  animation: bars 700ms ease-in-out infinite alternate;
+}
+
+.sound-btn[aria-pressed="true"] .sound-bars i:nth-child(2) { animation-delay: 120ms; }
+.sound-btn[aria-pressed="true"] .sound-bars i:nth-child(3) { animation-delay: 240ms; }
+
+@keyframes bars {
+  from { transform: scaleY(0.25); }
+  to { transform: scaleY(1); }
+}
+
+.sound-fallback {
+  font-size: 0.84rem;
+  color: var(--honey-3);
+  text-align: center;
+}
+
 /* ---------- facts ---------- */
 
 .facts {
@@ -604,6 +667,8 @@ button:disabled,
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+
+  .sound-btn[aria-pressed="true"] .sound-bars i { animation: none; transform: scaleY(0.7); }
 
   *,
   *::before,
